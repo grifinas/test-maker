@@ -4,7 +4,7 @@ import { File, NamedImport } from 'typescript-parser';
 import { makeTestContext } from './make-test-context';
 import { makeDependencyMocks } from './make-dependency-mocks';
 import { getImports } from '../get-imports';
-import { getMissingImports, getTestSpecificImports } from '../lib/unit-test';
+import { getMissingImports } from '../lib/unit-test';
 import { getImportsFromParameters } from '../get-imports-from-parameters';
 import { Location, SplicableString } from '../entities/splicable-string';
 import { makeFunctionTests } from './make-function-tests';
@@ -108,10 +108,6 @@ async function updateImports(
     getImports(testFile),
     unit.path,
   );
-  const missingImports = getMissingImports(
-    testFileImports,
-    await getTestSpecificImports(unit),
-  );
   const missingParameterImports = getMissingImports(
     testFileImports,
     unit.imports,
@@ -137,6 +133,5 @@ async function updateImports(
     }
   };
 
-  missingImports.forEach(addImports);
   missingParameterImports.forEach(addImports);
 }

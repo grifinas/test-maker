@@ -43,8 +43,7 @@ export class TestMaker {
     const type = forcedTestType ?? this.getTestType(parsed);
     const testName = this.getTestName(parsed, type);
 
-    const fileAlreadyExists = existsSync(testName);
-    const toView = fileAlreadyExists
+    const toView = existsSync(testName)
       ? this.testViewRegistry.getUpdate(type)
       : this.testViewRegistry.getCreate(type);
     const context = getFileContext(parsed, testName);
@@ -52,6 +51,9 @@ export class TestMaker {
 
     if (!toTest) {
       throw new Error(`Could not find test transformer for type: ${type}`);
+    }
+    if (!toView) {
+      throw new Error(`Could not find test view transformer for type: ${type}`);
     }
 
     const builder = this.getTestBuilder(context);

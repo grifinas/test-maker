@@ -1,8 +1,7 @@
 import { Parameter } from '../entities/parameter';
 import { UnitTest } from '../entities/unit-test';
-import { camelCase, difference, uniq } from 'lodash';
+import { camelCase, difference } from 'lodash';
 import { GroupedImports } from '../get-imports-from-parameters';
-import { Imports } from '../entities/imports';
 
 export function getStubFunctionName(parameter: Parameter): string {
   return parameter.isClass ? 'stubType' : 'stubFn';
@@ -14,24 +13,6 @@ export function getTestSubjectName(unit: UnitTest): string {
       ? unit.name
       : unit.name.replace('Action', '').replace('Factory', ''),
   );
-}
-
-export async function getTestSpecificImports(
-  unit: UnitTest,
-): Promise<GroupedImports> {
-  const imports = new Imports();
-
-  const stubFunctions = unit.parameters.map(getStubFunctionName);
-
-  if (stubFunctions.length) {
-    imports.add('@stub/functions', ...uniq(stubFunctions));
-  }
-
-  return imports.getGroupedImports();
-}
-
-export async function makeTestSpecificImports(unit: UnitTest): Promise<string> {
-  return makeImportStrings(await getTestSpecificImports(unit)).join('\n');
 }
 
 export function getMissingImports(
@@ -46,14 +27,4 @@ export function getMissingImports(
   });
 
   return needToImport;
-}
-
-export function makeImportStrings(groupedImports: GroupedImports): string[] {
-  const result: string[] = [];
-
-  groupedImports.forEach((imports, path) => {
-    result.push(`import { ${imports.join(', ')} } from '${path}';`);
-  });
-
-  return result;
 }

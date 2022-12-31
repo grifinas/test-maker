@@ -1,13 +1,18 @@
-import { getTemplateService, TEMPLATES } from '../services/template-service';
 import { UnitTest } from '../entities/unit-test';
 import { getTestSubjectName } from '../lib/unit-test';
+import { libraryFunctionTestTemplate } from '../../templates/parts/library-function-test';
+import { functionTestTemplate } from '../../templates/parts/function-test';
+import { itShouldUnitTemplate } from '../../templates/parts/it-should-unit';
 
-export function makeFunctionTests(unit: UnitTest, functions?: string[]): string {
+export function makeFunctionTests(
+  unit: UnitTest,
+  functions?: string[],
+): string {
   const template = unit.isLibrary
-    ? TEMPLATES.LIBRARY_FUNCTION_TEST
+    ? libraryFunctionTestTemplate
     : unit.isClass
-    ? TEMPLATES.FUNCTION_TEST
-    : TEMPLATES.IT_SHOULD_UNIT;
+    ? functionTestTemplate
+    : itShouldUnitTemplate;
 
   const parameters = unit.parameters.map((parameter) => parameter.name);
   const testSubjectName = getTestSubjectName(unit);
@@ -22,10 +27,10 @@ export function makeFunctionTests(unit: UnitTest, functions?: string[]): string 
 
   return toMake
     .map((functionName) =>
-      getTemplateService().use(template, {
+      template({
         testName: functionName,
         ...templateParameters,
-      })
+      }),
     )
     .join('\n');
 }
@@ -33,7 +38,11 @@ export function makeFunctionTests(unit: UnitTest, functions?: string[]): string 
 function getExpectations(unit: UnitTest): string[] {
   const expectations = ['expect(result).to.be.eql();'];
 
-  expectations.push(...unit.parameters.map((parameter) => `expect(${parameter.name}).to.be.calledOnceWithExactly();`));
+  expectations.push(
+    ...unit.parameters.map(
+      (parameter) => `expect(${parameter.name}).to.be.calledOnceWithExactly();`,
+    ),
+  );
 
   return expectations;
 }
