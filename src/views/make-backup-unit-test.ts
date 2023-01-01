@@ -1,5 +1,5 @@
 import { File } from 'typescript-parser';
-import { backupUnitTestTemplate } from '../../templates/backup-unit-test';
+import { backupUnitTestTemplate } from '../templates/backup-unit-test';
 
 export function makeBackupUnitTest(file: File): string {
   const unitName = file.filePath

@@ -1,5 +1,5 @@
-import { Parameter } from "./parameter";
-import { GroupedImports } from "../get-imports-from-parameters";
+import { Parameter } from './parameter';
+import { GroupedImports } from '../actions/get-imports-from-parameters';
 
 export interface UnitTest {
   name: string;

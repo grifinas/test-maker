@@ -1,4 +1,4 @@
-import { GroupedImports } from '../get-imports-from-parameters';
+import { GroupedImports } from '../actions/get-imports-from-parameters';
 
 export class Imports {
   private readonly data = new Map<string, string[]>();

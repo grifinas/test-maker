@@ -1,4 +1,4 @@
-import { TestMaker } from './src/test-maker';
+import { TestMaker } from './src';
 
 if (process.argv.length < 3) {
   console.log('Usage: ts-node index.ts path-to-file');

@@ -1,9 +1,12 @@
 import { ParameterDeclaration } from 'typescript-parser';
 import { Parameter } from '../entities/parameter';
-import { isImportClassLike } from '../is-import-class-like';
-import { Imports } from '../get-imports';
+import { isImportClassLike } from '../lib/is-import-class-like';
+import { Imports } from '../actions/get-imports';
 
-export async function transformParameters(parameters: ParameterDeclaration[], imports: Imports): Promise<Parameter[]> {
+export async function transformParameters(
+  parameters: ParameterDeclaration[],
+  imports: Imports,
+): Promise<Parameter[]> {
   return Promise.all(
     parameters.map(async (parameter) => {
       if (!parameter.type) {
@@ -16,12 +19,14 @@ export async function transformParameters(parameters: ParameterDeclaration[], im
       const parameterType = parameter.type.replace(/<.*/, '');
       const parameterImport = imports.get(parameterType);
       return {
-        isClass: parameterImport ? await isImportClassLike(parameterImport) : false,
+        isClass: parameterImport
+          ? await isImportClassLike(parameterImport)
+          : false,
         name: parameter.name,
         type: parameterType,
         isGeneric: parameter.type.includes('<'),
         typeWithArguments: parameter.type,
       };
-    })
+    }),
   );
 }

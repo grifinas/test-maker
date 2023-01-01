@@ -3,15 +3,15 @@ import { capitalize } from '../lib/string';
 import { File, NamedImport } from 'typescript-parser';
 import { makeTestContext } from './make-test-context';
 import { makeDependencyMocks } from './make-dependency-mocks';
-import { getImports } from '../get-imports';
+import { getImports } from '../actions';
 import { getMissingImports } from '../lib/unit-test';
-import { getImportsFromParameters } from '../get-imports-from-parameters';
+import { getImportsFromParameters } from '../actions';
 import { Location, SplicableString } from '../entities/splicable-string';
 import { makeFunctionTests } from './make-function-tests';
 import { readFileSync } from 'fs';
 import { getParser } from '../parser';
 import { Actions, TestViewRegistry } from '../services/test-view-registry';
-import { TestTypes } from '../actions/get-test-type';
+import { TestTypes } from '../actions';
 
 interface UpdateContext {
   testContent: string;

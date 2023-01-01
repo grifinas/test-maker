@@ -1,7 +1,7 @@
 import {
   getImportsFromParameters,
   GroupedImports,
-} from '../get-imports-from-parameters';
+} from '../actions/get-imports-from-parameters';
 import { Parameter } from './parameter';
 import { FileContext } from './file-context';
 import { FilePathService } from '../services/file-path-service';

@@ -1,7 +1,7 @@
 import { capitalize } from '../lib/string';
 import { getStubFunctionName } from '../lib/unit-test';
 import { Parameter } from '../entities/parameter';
-import { dependencyMockTemplate } from '../../templates/parts/dependency-mock';
+import { dependencyMockTemplate } from '../templates/parts/dependency-mock';
 
 export function makeDependencyMocks(parameters: Parameter[]): string {
   return parameters

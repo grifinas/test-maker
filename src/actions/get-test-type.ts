@@ -1,10 +1,6 @@
-import { File } from "typescript-parser";
-import { FilePathService } from "../services/file-path-service";
-
-export const TestTypes = {
-  IT: "integration",
-  UNIT: "unit",
-} as const;
+import { File } from 'typescript-parser';
+import { FilePathService } from '../services/file-path-service';
+import { TestTypes } from '../interfaces/get-test-type';
 
 export function getTestType(file: File): string {
   return FilePathService.isIntegrationTest(file)

@@ -1,10 +1,10 @@
-import { UnitTest } from '../entities/unit-test';
+import { UnitTest } from '../entities';
 import { makeTestContext } from './make-test-context';
 import { makeImportStringsFromGroupedImports } from './make-import-strings-from-grouped-imports';
 import { makeFunctionTests } from './make-function-tests';
-import { Actions, TestViewRegistry } from '../services/test-view-registry';
-import { TestTypes } from '../actions/get-test-type';
-import { unitTestTemplate } from '../../templates/unit-test';
+import { Actions, TestViewRegistry } from '../services';
+import { unitTestTemplate } from '../templates/unit-test';
+import { TestTypes } from '../interfaces';
 
 TestViewRegistry.register(Actions.Create, TestTypes.UNIT, makeUnitTest);
 

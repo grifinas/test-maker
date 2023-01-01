@@ -1,13 +1,13 @@
-import { TestRegistry } from "../services/test-registry";
-import { TestTypes } from "../actions/get-test-type";
-import { TestBuilder } from "../entities/test-builder";
-import { FileContext } from "../entities/file-context";
+import { TestRegistry } from '../services';
+import { TestBuilder } from '../entities';
+import { FileContext } from '../entities';
+import { TestTypes } from '../interfaces';
 
 TestRegistry.register(TestTypes.IT, transformer);
 
 async function transformer(
   fileContext: FileContext,
-  testBuilder: TestBuilder
+  testBuilder: TestBuilder,
 ): Promise<TestBuilder> {
   return testBuilder;
 }

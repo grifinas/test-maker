@@ -2,7 +2,7 @@ import { UnitTest } from '../entities/unit-test';
 import { capitalize, objectFormatting } from '../lib/string';
 import { getTestSubjectName } from '../lib/unit-test';
 import { makeDependencyMocks } from './make-dependency-mocks';
-import { buildTestContextTemplate } from '../../templates/parts/build-test-context';
+import { buildTestContextTemplate } from '../templates/parts/build-test-context';
 
 export function makeTestContext(unit: UnitTest, mocks?: string) {
   if (unit.isLibrary) {

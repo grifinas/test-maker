@@ -1,5 +1,5 @@
 import { format, resolveConfig } from 'prettier';
-import { saveFile } from '../save-file';
+import { saveFile } from './save-file';
 
 export async function savePromisedContent(
   contentPromise: Promise<string>,

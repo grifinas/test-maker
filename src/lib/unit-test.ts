@@ -1,7 +1,7 @@
 import { Parameter } from '../entities/parameter';
 import { UnitTest } from '../entities/unit-test';
 import { camelCase, difference } from 'lodash';
-import { GroupedImports } from '../get-imports-from-parameters';
+import { GroupedImports } from '../actions/get-imports-from-parameters';
 
 export function getStubFunctionName(parameter: Parameter): string {
   return parameter.isClass ? 'stubType' : 'stubFn';

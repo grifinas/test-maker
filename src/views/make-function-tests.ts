@@ -1,8 +1,8 @@
-import { UnitTest } from '../entities/unit-test';
-import { getTestSubjectName } from '../lib/unit-test';
-import { libraryFunctionTestTemplate } from '../../templates/parts/library-function-test';
-import { functionTestTemplate } from '../../templates/parts/function-test';
-import { itShouldUnitTemplate } from '../../templates/parts/it-should-unit';
+import { UnitTest } from '../entities';
+import { getTestSubjectName } from '../lib';
+import { libraryFunctionTestTemplate } from '../templates/parts/library-function-test';
+import { functionTestTemplate } from '../templates/parts/function-test';
+import { itShouldUnitTemplate } from '../templates/parts/it-should-unit';
 
 export function makeFunctionTests(
   unit: UnitTest,
