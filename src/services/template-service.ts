@@ -1,10 +1,13 @@
-type TemplateFunction = <T extends object>(params: T) => string;
+type TemplateFunction<T extends object> = (params: T) => string;
 
 export class TemplateService {
-  static templates = new Map<string, TemplateFunction>();
+  static templates = new Map<string, TemplateFunction<object>>();
 
-  static register(name: string, template: TemplateFunction): void {
-    TemplateService.templates.set(name, template);
+  static register<T extends object>(
+    name: string,
+    template: (params: T) => string,
+  ): void {
+    TemplateService.templates.set(name, template as TemplateFunction<object>);
   }
 
   use<T extends object>(name: string, params: T): string {
