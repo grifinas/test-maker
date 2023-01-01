@@ -1,21 +1,20 @@
-import { FilePathService } from './services/file-path-service';
+import { FilePathService, TestRegistry, TestViewRegistry } from './services';
 import { getParser } from './parser';
-import { GetTestType } from './interfaces/get-test-type';
-import { GetTestName } from './interfaces/get-test-name';
+import {
+  GetTestBuilder,
+  GetTestName,
+  GetTestType,
+  SavePromisedContent,
+} from './interfaces';
 import { existsSync } from 'fs';
-import { TestViewRegistry } from './services/test-view-registry';
-import { getFileContext } from './actions/get-file-context';
-import { TestRegistry } from './services/test-registry';
-import { SavePromisedContent } from './interfaces/save-promised-content';
-import { getDefaultTestMakerParams } from './actions/get-default-test-maker-params';
-import { GetTestBuilder } from './interfaces/get-test-builder';
+import { getDefaultTestMakerParams, getFileContext } from './actions';
 import { makeBackupUnitTest } from './views/make-backup-unit-test';
 
 export interface ConstructorInput {
-  getTestType: GetTestType;
-  getTestName: GetTestName;
-  savePromisedContent: SavePromisedContent;
   getTestBuilder: GetTestBuilder;
+  getTestName: GetTestName;
+  getTestType: GetTestType;
+  savePromisedContent: SavePromisedContent;
 }
 
 export class TestMaker {
@@ -37,7 +36,7 @@ export class TestMaker {
     this.savePromisedContent = savePromisedContent;
   }
 
-  public async makeTest(file: string, forcedTestType?: string) {
+  public async makeTest(file: string, forcedTestType?: string): Promise<void> {
     FilePathService.setRootFrom(file);
     const parsed = await getParser().parseFile(file, '');
     const type = forcedTestType ?? this.getTestType(parsed);

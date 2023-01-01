@@ -1,10 +1,9 @@
-import { UnitTest } from '../entities/unit-test';
-import { capitalize, objectFormatting } from '../lib/string';
-import { getTestSubjectName } from '../lib/unit-test';
+import { UnitTest } from '../entities';
+import { capitalize, getTestSubjectName, objectFormatting } from '../lib';
 import { makeDependencyMocks } from './make-dependency-mocks';
 import { buildTestContextTemplate } from '../templates/parts/build-test-context';
 
-export function makeTestContext(unit: UnitTest, mocks?: string) {
+export function makeTestContext(unit: UnitTest, mocks?: string): string {
   if (unit.isLibrary) {
     return '';
   }

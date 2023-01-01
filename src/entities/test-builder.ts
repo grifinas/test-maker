@@ -1,25 +1,22 @@
-import {
-  getImportsFromParameters,
-  GroupedImports,
-} from '../actions/get-imports-from-parameters';
+import { GroupedImports, getImportsFromParameters } from '../actions';
 import { Parameter } from './parameter';
 import { FileContext } from './file-context';
-import { FilePathService } from '../services/file-path-service';
+import { FilePathService } from '../services';
 import { UnitTest } from './unit-test';
-import { getStubFunctionName } from '../lib/unit-test';
+import { getStubFunctionName } from '../lib';
 
 export class TestBuilder {
   private readonly imports = new Map<string, Set<string>>();
   private readonly functions: string[] = [];
   private readonly parameters: Parameter[] = [];
-  private _isClass: boolean = false;
-  private _isLibrary: boolean = false;
+  private _isClass = false;
+  private _isLibrary = false;
 
-  private _name: string = '';
+  private _name = '';
 
   constructor(private readonly fileContext: FileContext) {}
 
-  addImport(path: string, components: string[]) {
+  addImport(path: string, components: string[]): void {
     const existingImports = this.imports.get(path) || new Set<string>();
     components.forEach((specifier) => existingImports.add(specifier));
     if (!this.imports.has(path)) {
@@ -27,13 +24,13 @@ export class TestBuilder {
     }
   }
 
-  addImports(imports: GroupedImports) {
+  addImports(imports: GroupedImports): void {
     imports.forEach((components, path) => {
       this.addImport(path, components);
     });
   }
 
-  importSelf(fileContext: FileContext) {
+  importSelf(fileContext: FileContext): void {
     this.addImport(
       FilePathService.getImportString(
         fileContext.path,
@@ -43,7 +40,7 @@ export class TestBuilder {
     );
   }
 
-  addParameters(parameters: Parameter[]) {
+  addParameters(parameters: Parameter[]): void {
     this.addImports(
       getImportsFromParameters(
         parameters,
@@ -54,11 +51,11 @@ export class TestBuilder {
     parameters.map((param) => this.addParameter(param));
   }
 
-  addFunction(fn: string) {
+  addFunction(fn: string): void {
     this.functions.push(fn);
   }
 
-  addParameter(parameter: Parameter) {
+  addParameter(parameter: Parameter): void {
     this.parameters.push(parameter);
     this.addImport('@stub/functions', [getStubFunctionName(parameter)]);
   }

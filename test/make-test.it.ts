@@ -1,9 +1,9 @@
-import { unlinkSync, rmdir, readFileSync } from 'fs';
+import { readFileSync, rmdir, unlinkSync } from 'fs';
 import { expect } from './expectations';
 import { saveFile } from '../src/actions/save-file';
 import { TestMaker } from '../src/test-maker';
 import '../src/register-default';
-import { TestTypes } from '../src/actions/get-test-type';
+import { TestTypes } from '../src';
 
 describe('Test Maker', () => {
   function expectContentIsEqual(actual: string, expected: string) {
@@ -54,7 +54,9 @@ describe('Test Maker', () => {
   function removeIfExists(path: string) {
     try {
       unlinkSync(getTestPath(path));
-    } catch (e) {}
+    } catch (e) {
+      return;
+    }
   }
 
   function getTestPath(path: string): string {

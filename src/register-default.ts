@@ -1,2 +1,2 @@
-import "./transformers/register-default";
-import "./views/register-default";
+import './transformers/register-default';
+import './views/register-default';

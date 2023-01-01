@@ -1,4 +1,3 @@
 describe('ServiceWithBothTests', () => {
-  it('should', async () => {
-  });
+  it('should', async () => {});
 });

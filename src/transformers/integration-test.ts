@@ -1,6 +1,5 @@
 import { TestRegistry } from '../services';
-import { TestBuilder } from '../entities';
-import { FileContext } from '../entities';
+import { FileContext, TestBuilder } from '../entities';
 import { TestTypes } from '../interfaces';
 
 TestRegistry.register(TestTypes.IT, transformer);

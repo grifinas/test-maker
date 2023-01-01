@@ -1,4 +1,4 @@
-import { SplicableString } from '../../src/entities/splicable-string';
+import { SplicableString } from '../../src';
 import { expect } from '../expectations';
 import { describe } from 'mocha';
 
@@ -76,10 +76,13 @@ describe('SplicableString', () => {
     });
 
     it('should add second line after first even if original first line was edited', () => {
-      const firstAddedLine = `import { expect } from 'chai/expectations';\n`;
-      const firstReplacedLine = `import { stubType, stubFn } from '@stub/functions';`;
-      const secondLine = `import { getImportStatusFactory } from '../../../../src/domain/business-logic/get-import-status';`;
-      const secondAddedLine = `import { DateProvider } from '../../../../src/lib/date';\n`;
+      const firstAddedLine = "import { expect } from 'chai/expectations';\n";
+      const firstReplacedLine =
+        "import { stubType, stubFn } from '@stub/functions';";
+      const secondLine =
+        "import { getImportStatusFactory } from '../../../../src/domain/business-logic/get-import-status';";
+      const secondAddedLine =
+        "import { DateProvider } from '../../../../src/lib/date';\n";
       const splicableString = new SplicableString(
         `import { createStubInstance } from '@stub/functions';\n${secondLine}`,
       );

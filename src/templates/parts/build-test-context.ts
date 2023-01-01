@@ -1,6 +1,6 @@
 interface Params {
-  mocks: string;
   mockFunctionDI: string;
+  mocks: string;
   parameters: string;
   testSubject: string;
 }
@@ -10,7 +10,7 @@ export function buildTestContextTemplate({
   mockFunctionDI,
   parameters,
   testSubject,
-}: Params) {
+}: Params): string {
   return `${mocks}
 
 const buildTestContext = ({${mockFunctionDI}} = {}) => {

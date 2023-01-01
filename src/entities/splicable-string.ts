@@ -1,6 +1,6 @@
 export interface Location {
-  start: number;
   end: number;
+  start: number;
 }
 
 interface Modifications extends Location {
@@ -22,7 +22,7 @@ export class SplicableString {
     this.input = original;
   }
 
-  add(content: string, from: number = 0): this {
+  add(content: string, from = 0): this {
     return this.splice({ start: from, end: from }, content);
   }
 
@@ -32,7 +32,10 @@ export class SplicableString {
 
   splice(location: Location, replace: string): this {
     const realLocation = this.resolveRealLocation(location);
-    this.input = this.input.substring(0, realLocation.start) + replace + this.input.substring(realLocation.end);
+    this.input =
+      this.input.substring(0, realLocation.start) +
+      replace +
+      this.input.substring(realLocation.end);
     this.modifications.push({
       ...location,
       length: replace.length,
@@ -45,7 +48,10 @@ export class SplicableString {
     return this.input;
   }
 
-  private resolveModificationType(location: Location, replace: string): ModificationType {
+  private resolveModificationType(
+    location: Location,
+    replace: string,
+  ): ModificationType {
     if (location.start === location.end) {
       return ModificationType.Add;
     }
@@ -69,7 +75,9 @@ export class SplicableString {
         return modification.end > location.start;
       }
 
-      return modification.start < location.start && modification.end > location.start;
+      return (
+        modification.start < location.start && modification.end > location.start
+      );
     });
 
     if (violatingChunk) {

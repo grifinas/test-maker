@@ -3,16 +3,24 @@
   "version": "1.0.0",
   "description": "Make tests",
   "main": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test:it": "mocha --require ts-node/register 'test/**/*.it.ts' --reporter mocha-env-reporter",
+    "test:spec": "mocha --require ts-node/register 'test/@(services)/**/*.spec.ts' --reporter mocha-env-reporter",
+    "test": "npm run test:spec && npm run test:it",
+    "lint": "eslint ./src --ext .ts --fix --max-warnings=0",
+    "generate-test": "ts-node index.ts"
+  },
   "dependencies": {
-    "@types/lodash": "^4.14.141",
-    "@types/node": "^14.14.14",
-    "@types/prettier": "^2.2.3",
     "lodash": "^4.17.15",
     "prettier": "^2.3.0",
     "ts-node": "^8.10.2",
     "typescript-parser": "^2.6.1"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.141",
+    "@types/node": "^14.14.14",
+    "@types/prettier": "^2.2.3",
     "@types/chai": "^4.2.3",
     "@types/chai-string": "^1.4.2",
     "@types/mocha": "^8.0.3",
@@ -20,14 +28,15 @@
     "chai-string": "^1.5.0",
     "mocha": "^8.2.0",
     "mocha-env-reporter": "^4.0.0",
-    "typescript": "^3.8.2"
-  },
-  "scripts": {
-    "build": "tsc",
-    "test:it": "mocha --require ts-node/register 'test/**/*.it.ts' --reporter mocha-env-reporter",
-    "test:spec": "mocha --require ts-node/register 'test/@(services)/**/*.spec.ts' --reporter mocha-env-reporter",
-    "test": "npm run test:spec && npm run test:it",
-    "generate-test": "ts-node index.ts"
+    "typescript": "^3.8.2",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-typescript-sort-keys": "^2.1.0",
+    "eslint-plugin-unused-imports": "^2.0.0"
   },
   "author": "",
   "license": "ISC"

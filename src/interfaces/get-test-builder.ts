@@ -1,4 +1,3 @@
-import { FileContext } from "../entities/file-context";
-import { TestBuilder } from "../entities/test-builder";
+import { FileContext, TestBuilder } from '../entities';
 
 export type GetTestBuilder = (fileContext: FileContext) => TestBuilder;

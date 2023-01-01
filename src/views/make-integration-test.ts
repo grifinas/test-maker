@@ -1,7 +1,7 @@
-import { Actions, TestViewRegistry } from '../services/test-view-registry';
-import { TestTypes } from '../actions/get-test-type';
-import { UnitTest } from '../entities/unit-test';
+import { Actions, TestViewRegistry } from '../services';
+import { UnitTest } from '../entities';
 import { integrationTestTemplate } from '../templates/integration-test';
+import { TestTypes } from '../interfaces';
 
 TestViewRegistry.register(Actions.Create, TestTypes.IT, makeIntegrationTest);
 

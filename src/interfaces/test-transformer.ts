@@ -1,7 +1,6 @@
-import { TestBuilder } from "../entities/test-builder";
-import { FileContext } from "../entities/file-context";
+import { FileContext, TestBuilder } from '../entities';
 
 export type TestTransformer = (
   fileContext: FileContext,
-  testBuilder: TestBuilder
+  testBuilder: TestBuilder,
 ) => Promise<TestBuilder>;

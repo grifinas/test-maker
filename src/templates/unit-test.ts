@@ -1,8 +1,8 @@
 interface Params {
-  imports: string;
-  unitName: string;
   buildTestContext: string;
+  imports: string;
   tests: string;
+  unitName: string;
 }
 
 export function unitTestTemplate({

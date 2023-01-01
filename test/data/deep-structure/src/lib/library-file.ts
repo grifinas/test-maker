@@ -1,7 +1,7 @@
 import { URL } from 'url';
 
 export function foo(): object {
-  return {}
+  return {};
 }
 
 export function bar(entity: URL): number {

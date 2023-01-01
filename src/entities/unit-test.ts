@@ -1,12 +1,12 @@
 import { Parameter } from './parameter';
-import { GroupedImports } from '../actions/get-imports-from-parameters';
+import { GroupedImports } from '../actions';
 
 export interface UnitTest {
-  name: string;
-  path: string;
-  imports: GroupedImports;
   functions: string[];
-  parameters: Parameter[];
+  imports: GroupedImports;
   isClass: boolean;
   isLibrary: boolean;
+  name: string;
+  parameters: Parameter[];
+  path: string;
 }

@@ -99,7 +99,7 @@ export class FilePathService {
       );
     }
 
-    const regex = new RegExp(`${this.root}\/[^\/]+\/(.*)\.ts`);
+    const regex = new RegExp(`${this.root}/[^/]+/(.*).ts`);
 
     return file.filePath.replace(
       regex,
@@ -107,9 +107,9 @@ export class FilePathService {
     );
   }
 
-  static setRootFrom(file: string) {
+  static setRootFrom(file: string): void {
     if (file.indexOf('/src/') > -1) {
-      this.root = file.replace(/\/src\/(.*)/, ``);
+      this.root = file.replace(/\/src\/(.*)/, '');
     } else {
       const parts = file.split('/');
       while (parts.length) {

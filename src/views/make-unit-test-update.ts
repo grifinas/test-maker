@@ -1,17 +1,14 @@
-import { UnitTest } from '../entities/unit-test';
-import { capitalize } from '../lib/string';
+import { Location, SplicableString, UnitTest } from '../entities';
+import { capitalize, getMissingImports } from '../lib';
 import { File, NamedImport } from 'typescript-parser';
 import { makeTestContext } from './make-test-context';
 import { makeDependencyMocks } from './make-dependency-mocks';
-import { getImports } from '../actions';
-import { getMissingImports } from '../lib/unit-test';
-import { getImportsFromParameters } from '../actions';
-import { Location, SplicableString } from '../entities/splicable-string';
+import { getImports, getImportsFromParameters } from '../actions';
 import { makeFunctionTests } from './make-function-tests';
 import { readFileSync } from 'fs';
 import { getParser } from '../parser';
-import { Actions, TestViewRegistry } from '../services/test-view-registry';
-import { TestTypes } from '../actions';
+import { Actions, TestViewRegistry } from '../services';
+import { TestTypes } from '../interfaces';
 
 interface UpdateContext {
   testContent: string;
@@ -102,7 +99,7 @@ async function updateImports(
   testContent: SplicableString,
   unit: UnitTest,
   testFile: File,
-) {
+): Promise<void> {
   const testFileImports = getImportsFromParameters(
     unit.parameters,
     getImports(testFile),
@@ -117,7 +114,7 @@ async function updateImports(
     (namedImport) => namedImport instanceof NamedImport,
   ) as NamedImport[];
 
-  const addImports = (imports: string[], library: string) => {
+  const addImports = (imports: string[], library: string): void => {
     const namedImport = namedImports.find(
       (namedImport) => namedImport.libraryName === library,
     );

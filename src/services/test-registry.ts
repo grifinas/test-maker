@@ -1,8 +1,8 @@
-import { TestTransformer } from "../interfaces/test-transformer";
+import { TestTransformer } from '../interfaces';
 
 export class TestRegistry {
   static transformerMap = new Map<string, TestTransformer>();
-  static register(type: string, transformer: TestTransformer) {
+  static register(type: string, transformer: TestTransformer): void {
     if (TestRegistry.transformerMap.has(type)) {
       throw new Error(`Test transformer for type: ${type} already exists`);
     }

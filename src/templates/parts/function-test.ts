@@ -1,11 +1,16 @@
 interface Params {
-  testName: string;
-  parametersAndSubject: string;
-  testSubjectName: string;
   expectations: string;
+  parametersAndSubject: string;
+  testName: string;
+  testSubjectName: string;
 }
 
-export function functionTestTemplate({ testName, parametersAndSubject, testSubjectName, expectations }: Params) {
+export function functionTestTemplate({
+  testName,
+  parametersAndSubject,
+  testSubjectName,
+  expectations,
+}: Params): string {
   return `describe('${testName}', () => {
   it('should', async () => {
     const { ${parametersAndSubject} } = buildTestContext();
