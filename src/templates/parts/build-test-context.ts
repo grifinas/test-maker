@@ -1,3 +1,5 @@
+import { TemplateService } from '../../services';
+
 interface Params {
   mockFunctionDI: string;
   mocks: string;
@@ -5,7 +7,10 @@ interface Params {
   testSubject: string;
 }
 
-export function buildTestContextTemplate({
+export const TEMPLATE_BUILD_TEST_CONTEXT = 'TEMPLATE_BUILD_TEST_CONTEXT';
+TemplateService.register(TEMPLATE_BUILD_TEST_CONTEXT, buildTestContextTemplate);
+
+function buildTestContextTemplate({
   mocks,
   mockFunctionDI,
   parameters,

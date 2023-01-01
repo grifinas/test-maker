@@ -7,7 +7,7 @@ import { getImports, getImportsFromParameters } from '../actions';
 import { makeFunctionTests } from './make-function-tests';
 import { readFileSync } from 'fs';
 import { getParser } from '../parser';
-import { Actions, TestViewRegistry } from '../services';
+import { Actions, TemplateService, TestViewRegistry } from '../services';
 import { TestTypes } from '../interfaces';
 
 interface UpdateContext {
@@ -18,7 +18,10 @@ interface UpdateContext {
 
 TestViewRegistry.register(Actions.Update, TestTypes.UNIT, makeUnitTestUpdate);
 
-export async function makeUnitTestUpdate(unit: UnitTest): Promise<string> {
+export async function makeUnitTestUpdate(
+  templateService: TemplateService,
+  unit: UnitTest,
+): Promise<string> {
   const testContent = readFileSync(unit.path).toString();
   const testFile = await getParser().parseFile(unit.path, '');
 
@@ -30,13 +33,17 @@ export async function makeUnitTestUpdate(unit: UnitTest): Promise<string> {
 
   return await [updateMocks, addMissingFunctionTests].reduce(
     async (newContent, action) => {
-      return await action({ ...context, testContent: await newContent });
+      return await action(templateService, {
+        ...context,
+        testContent: await newContent,
+      });
     },
     Promise.resolve(testContent),
   );
 }
 
 async function addMissingFunctionTests(
+  templateService: TemplateService,
   updateContext: UpdateContext,
 ): Promise<string> {
   const { unit, testContent } = updateContext;
@@ -55,12 +62,18 @@ async function addMissingFunctionTests(
   const newCodeGoesHere = testContent.lastIndexOf('});');
 
   const forSplicing = new SplicableString(testContent);
-  forSplicing.add(makeFunctionTests(unit, missingFunctions), newCodeGoesHere);
+  forSplicing.add(
+    makeFunctionTests(templateService, unit, missingFunctions),
+    newCodeGoesHere,
+  );
 
   return forSplicing.result();
 }
 
-async function updateMocks(updateContext: UpdateContext): Promise<string> {
+async function updateMocks(
+  templateService: TemplateService,
+  updateContext: UpdateContext,
+): Promise<string> {
   const { unit, testFile, testContent } = updateContext;
   const missingMocks = unit.parameters.filter(
     (parameter) =>
@@ -84,9 +97,9 @@ async function updateMocks(updateContext: UpdateContext): Promise<string> {
     );
   }
 
-  const mocks = makeDependencyMocks(missingMocks);
+  const mocks = makeDependencyMocks(templateService, missingMocks);
 
-  const context = makeTestContext(unit, mocks);
+  const context = makeTestContext(templateService, unit, mocks);
 
   const forSplicing = new SplicableString(testContent);
   await updateImports(forSplicing, unit, testFile);

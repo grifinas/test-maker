@@ -1,3 +1,5 @@
+import { TemplateService } from '../services';
+
 interface Params {
   buildTestContext: string;
   imports: string;
@@ -5,7 +7,10 @@ interface Params {
   unitName: string;
 }
 
-export function unitTestTemplate({
+export const TEMPLATE_UNIT_TEST = 'TEMPLATE_UNIT_TEST';
+TemplateService.register(TEMPLATE_UNIT_TEST, unitTestTemplate);
+
+function unitTestTemplate({
   imports,
   unitName,
   buildTestContext,

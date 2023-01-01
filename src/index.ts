@@ -6,3 +6,4 @@ export * from './interfaces';
 export * from './lib';
 export * from './services';
 export * from './transformers';
+export * from './templates';

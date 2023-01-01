@@ -1,10 +1,15 @@
+import { TemplateService } from '../../services';
+
 interface Params {
   parameterName: string;
   parameterTypeWithArguments: string;
   stubFunction: string;
 }
 
-export function dependencyMockTemplate({
+export const TEMPLATE_DEPENDENCY_MOCK = 'TEMPLATE_DEPENDENCY_MOCK';
+TemplateService.register(TEMPLATE_DEPENDENCY_MOCK, dependencyMockTemplate);
+
+function dependencyMockTemplate({
   parameterName,
   stubFunction,
   parameterTypeWithArguments,

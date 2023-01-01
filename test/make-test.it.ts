@@ -1,7 +1,7 @@
 import { readFileSync, rmdir, unlinkSync } from 'fs';
 import { expect } from './expectations';
-import { saveFile } from '../src/actions/save-file';
-import { TestMaker } from '../src/test-maker';
+import { saveFile } from '../src';
+import { TestMaker } from '../src';
 import '../src/register-default';
 import { TestTypes } from '../src';
 

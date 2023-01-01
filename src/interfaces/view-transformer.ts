@@ -1,3 +1,7 @@
-import { UnitTest } from '../entities/unit-test';
+import { UnitTest } from '../entities';
+import { TemplateService } from '../services';
 
-export type ViewTransformer = (test: UnitTest) => Promise<string>;
+export type ViewTransformer = (
+  templateService: TemplateService,
+  test: UnitTest,
+) => Promise<string>;

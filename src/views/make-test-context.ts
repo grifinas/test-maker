@@ -1,9 +1,15 @@
 import { UnitTest } from '../entities';
 import { capitalize, getTestSubjectName, objectFormatting } from '../lib';
 import { makeDependencyMocks } from './make-dependency-mocks';
-import { buildTestContextTemplate } from '../templates/parts/build-test-context';
 
-export function makeTestContext(unit: UnitTest, mocks?: string): string {
+import { TemplateService } from '../services';
+import { TEMPLATE_BUILD_TEST_CONTEXT } from '../templates';
+
+export function makeTestContext(
+  templateService: TemplateService,
+  unit: UnitTest,
+  mocks?: string,
+): string {
   if (unit.isLibrary) {
     return '';
   }
@@ -11,10 +17,10 @@ export function makeTestContext(unit: UnitTest, mocks?: string): string {
   const parameters = unit.parameters.map((parameter) => parameter.name);
   const testSubject = getTestSubject(unit);
 
-  return buildTestContextTemplate({
+  return templateService.use(TEMPLATE_BUILD_TEST_CONTEXT, {
     mockFunctionDI: objectFormatting(getMockFunctionInjections(unit)),
     parameters: parameters.join(',\n') + (parameters.length ? ',' : ''),
-    mocks: mocks || makeDependencyMocks(unit.parameters),
+    mocks: mocks || makeDependencyMocks(templateService, unit.parameters),
     testSubject,
   });
 }

@@ -1,3 +1,5 @@
+import { TemplateService } from '../../services';
+
 interface Params {
   expectations: string;
   parametersAndSubject: string;
@@ -5,7 +7,10 @@ interface Params {
   testSubjectName: string;
 }
 
-export function functionTestTemplate({
+export const TEMPLATE_FUNCTION_TEST = 'TEMPLATE_FUNCTION_TEST';
+TemplateService.register(TEMPLATE_FUNCTION_TEST, functionTestTemplate);
+
+function functionTestTemplate({
   testName,
   parametersAndSubject,
   testSubjectName,

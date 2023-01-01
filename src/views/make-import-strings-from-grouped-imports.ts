@@ -1,4 +1,4 @@
-import { GroupedImports } from '../actions/get-imports-from-parameters';
+import { GroupedImports } from '../actions';
 
 export function makeImportStringsFromGroupedImports(
   imports: GroupedImports,

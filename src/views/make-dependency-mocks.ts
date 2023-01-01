@@ -1,12 +1,16 @@
-import { capitalize } from '../lib/string';
-import { getStubFunctionName } from '../lib/unit-test';
-import { Parameter } from '../entities/parameter';
-import { dependencyMockTemplate } from '../templates/parts/dependency-mock';
+import { capitalize, getStubFunctionName } from '../lib';
+import { Parameter } from '../entities';
 
-export function makeDependencyMocks(parameters: Parameter[]): string {
+import { TemplateService } from '../services';
+import { TEMPLATE_DEPENDENCY_MOCK } from '../templates';
+
+export function makeDependencyMocks(
+  templateService: TemplateService,
+  parameters: Parameter[],
+): string {
   return parameters
     .map((parameter) => {
-      return dependencyMockTemplate({
+      return templateService.use(TEMPLATE_DEPENDENCY_MOCK, {
         parameterName: capitalize(parameter.name),
         //TODO as string is bad here
         parameterTypeWithArguments: parameter.typeWithArguments as string,

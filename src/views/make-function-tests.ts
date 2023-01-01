@@ -1,18 +1,23 @@
 import { UnitTest } from '../entities';
 import { getTestSubjectName } from '../lib';
-import { libraryFunctionTestTemplate } from '../templates/parts/library-function-test';
-import { functionTestTemplate } from '../templates/parts/function-test';
-import { itShouldUnitTemplate } from '../templates/parts/it-should-unit';
+
+import { TemplateService } from '../services';
+import {
+  TEMPLATE_FUNCTION_TEST,
+  TEMPLATE_IT_SHOULD_UNIT,
+  TEMPLATE_LIBRARY_FUNCTION,
+} from '../templates';
 
 export function makeFunctionTests(
+  templateService: TemplateService,
   unit: UnitTest,
   functions?: string[],
 ): string {
   const template = unit.isLibrary
-    ? libraryFunctionTestTemplate
+    ? TEMPLATE_LIBRARY_FUNCTION
     : unit.isClass
-    ? functionTestTemplate
-    : itShouldUnitTemplate;
+    ? TEMPLATE_FUNCTION_TEST
+    : TEMPLATE_IT_SHOULD_UNIT;
 
   const parameters = unit.parameters.map((parameter) => parameter.name);
   const testSubjectName = getTestSubjectName(unit);
@@ -27,7 +32,7 @@ export function makeFunctionTests(
 
   return toMake
     .map((functionName) =>
-      template({
+      templateService.use(template, {
         testName: functionName,
         ...templateParameters,
       }),

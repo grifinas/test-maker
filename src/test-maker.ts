@@ -1,4 +1,9 @@
-import { FilePathService, TestRegistry, TestViewRegistry } from './services';
+import {
+  FilePathService,
+  TemplateService,
+  TestRegistry,
+  TestViewRegistry,
+} from './services';
 import { getParser } from './parser';
 import {
   GetTestBuilder,
@@ -56,16 +61,17 @@ export class TestMaker {
     }
 
     const builder = this.getTestBuilder(context);
+    const templateService = new TemplateService();
 
     const result = toTest(context, builder)
       .then((builder) => builder.build())
-      .then(toView)
+      .then((data) => toView(templateService, data))
       .catch((e) => {
         console.error(
           'Error when making test data, falling back to simple test',
           e,
         );
-        return makeBackupUnitTest(parsed);
+        return makeBackupUnitTest(templateService, parsed);
       });
 
     return this.savePromisedContent(result, testName);
