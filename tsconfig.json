@@ -5,6 +5,7 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "downlevelIteration": true,
+    "declaration": true,
     "strict": true,
     "allowJs": false,
     "lib": ["es2020"],
@@ -14,5 +15,5 @@
     "esModuleInterop": true,
     "typeRoots": ["node_modules/@types"]
   },
-  "include": ["./index.ts", "./src/modules.d.ts"]
+  "include": ["./index.ts", "./src/modules.d.ts", "./src/index.ts"]
 }
