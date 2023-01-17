@@ -1,19 +1,24 @@
 import { TemplateService } from '../../services';
+import { capitalize, getStubFunctionName } from '../../lib';
+import { Parameter } from '../../entities';
 
 interface Params {
-  parameterName: string;
-  parameterTypeWithArguments: string;
-  stubFunction: string;
+  parameters: Parameter[];
 }
 
 export const TEMPLATE_DEPENDENCY_MOCK = 'TEMPLATE_DEPENDENCY_MOCK';
-TemplateService.register(TEMPLATE_DEPENDENCY_MOCK, dependencyMockTemplate);
-
-function dependencyMockTemplate({
-  parameterName,
-  stubFunction,
-  parameterTypeWithArguments,
-}: Params): string {
-  return `const get${parameterName} = () => ${stubFunction}<${parameterTypeWithArguments}>();
-`;
-}
+TemplateService.register<Params>(
+  TEMPLATE_DEPENDENCY_MOCK,
+  ({ test, extra }) => {
+    return (extra?.parameters || test.parameters)
+      .map(
+        (parameter) => `const get${capitalize(
+          parameter.name,
+        )} = () => ${getStubFunctionName(parameter)}<${
+          parameter.typeWithArguments
+        }>();
+`,
+      )
+      .join('\n');
+  },
+);

@@ -9,7 +9,8 @@
     "test:spec": "mocha --require ts-node/register 'test/@(services)/**/*.spec.ts' --reporter mocha-env-reporter",
     "test": "npm run test:spec && npm run test:it",
     "lint": "eslint ./src --ext .ts --fix --max-warnings=0",
-    "generate-test": "ts-node index.ts"
+    "generate-test": "ts-node index.ts",
+    "confirm": "npm run build && npm run lint && npm run test"
   },
   "dependencies": {
     "lodash": "^4.17.15",

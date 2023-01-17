@@ -6,3 +6,8 @@ export { TEMPLATE_FUNCTION_TEST } from './parts/function-test';
 export { TEMPLATE_DEPENDENCY_MOCK } from './parts/dependency-mock';
 export { TEMPLATE_IT_SHOULD_UNIT } from './parts/it-should-unit';
 export { TEMPLATE_LIBRARY_FUNCTION } from './parts/library-function-test';
+export { TEMPLATE_IMPORTS } from './parts/imports';
+export { TEMPLATE_TEST_SUBJECT } from './parts/test-subject';
+export { TEMPLATE_EXPECTATIONS } from './parts/expectations';
+export { TEMPLATE_MOCK_DEPENDENCY_INJECTIONS } from './parts/mock-dependency-injections';
+export { TEMPLATE_DESTRUCTURE_BUILD_TEST_CONTEXT } from './parts/destructure-build-test-context';

@@ -1,14 +1,13 @@
 import { Location, SplicableString, UnitTest } from '../entities';
 import { capitalize, getMissingImports } from '../lib';
 import { File, NamedImport } from 'typescript-parser';
-import { makeTestContext } from './make-test-context';
-import { makeDependencyMocks } from './make-dependency-mocks';
 import { getImports, getImportsFromParameters } from '../actions';
-import { makeFunctionTests } from './make-function-tests';
 import { readFileSync } from 'fs';
 import { getParser } from '../parser';
 import { Actions, TemplateService, TestViewRegistry } from '../services';
 import { TestTypes } from '../interfaces';
+import { TEMPLATE_FUNCTION_TESTS } from '../templates/parts/function-tests';
+import { TEMPLATE_BUILD_TEST_CONTEXT } from '../templates';
 
 interface UpdateContext {
   testContent: string;
@@ -63,7 +62,9 @@ async function addMissingFunctionTests(
 
   const forSplicing = new SplicableString(testContent);
   forSplicing.add(
-    makeFunctionTests(templateService, unit, missingFunctions),
+    templateService.use(TEMPLATE_FUNCTION_TESTS, unit, {
+      functions: missingFunctions,
+    }),
     newCodeGoesHere,
   );
 
@@ -97,9 +98,9 @@ async function updateMocks(
     );
   }
 
-  const mocks = makeDependencyMocks(templateService, missingMocks);
-
-  const context = makeTestContext(templateService, unit, mocks);
+  const context = templateService.use(TEMPLATE_BUILD_TEST_CONTEXT, unit, {
+    parameters: missingMocks,
+  });
 
   const forSplicing = new SplicableString(testContent);
   await updateImports(forSplicing, unit, testFile);

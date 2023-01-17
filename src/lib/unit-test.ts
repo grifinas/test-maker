@@ -1,10 +1,13 @@
-import { Parameter } from '../entities/parameter';
-import { UnitTest } from '../entities/unit-test';
+import { Parameter, UnitTest } from '../entities';
 import { camelCase, difference } from 'lodash';
-import { GroupedImports } from '../actions/get-imports-from-parameters';
+import { GroupedImports } from '../actions';
 
 export function getStubFunctionName(parameter: Parameter): string {
   return parameter.isClass ? 'stubType' : 'stubFn';
+}
+
+export function getParameterNames(test: UnitTest): string[] {
+  return test.parameters.map((parameter) => parameter.name);
 }
 
 export function getTestSubjectName(unit: UnitTest): string {

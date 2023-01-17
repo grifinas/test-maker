@@ -52,6 +52,7 @@
     "typescript-sort-keys/interface": "warn",
     "typescript-sort-keys/string-enum": "warn",
     "no-prototype-builtins": "warn",
-    "import/no-duplicates": "error"
+    "import/no-duplicates": "error",
+    "@typescript-eslint/triple-slash-reference": "off"
   }
 }

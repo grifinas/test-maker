@@ -1,27 +1,24 @@
 import { TemplateService } from '../services';
+import { TEMPLATE_BUILD_TEST_CONTEXT } from './parts/build-test-context';
+import { TEMPLATE_IMPORTS } from './parts/imports';
+import { TEMPLATE_FUNCTION_TESTS } from './parts/function-tests';
 
 interface Params {
-  buildTestContext: string;
-  imports: string;
-  tests: string;
-  unitName: string;
+  functions: string[];
+  mocks: string;
 }
 
 export const TEMPLATE_UNIT_TEST = 'TEMPLATE_UNIT_TEST';
-TemplateService.register(TEMPLATE_UNIT_TEST, unitTestTemplate);
+TemplateService.register<Params>(
+  TEMPLATE_UNIT_TEST,
+  ({ test, include, extra }) => {
+    return `${include(TEMPLATE_IMPORTS)}
+  
+  describe('${test.name}', () => {
+  ${include(TEMPLATE_BUILD_TEST_CONTEXT)}
 
-function unitTestTemplate({
-  imports,
-  unitName,
-  buildTestContext,
-  tests,
-}: Params): string {
-  return `${imports}
-
-describe('${unitName}', () => {
-  ${buildTestContext}
-
-  ${tests}
+  ${include(TEMPLATE_FUNCTION_TESTS, extra)}
 });
 `;
-}
+  },
+);
