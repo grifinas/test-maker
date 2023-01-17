@@ -1,24 +1,15 @@
 import { TemplateService } from '../../services';
-
-interface Params {
-  expectations: string;
-  parametersAndSubject: string;
-  testSubjectName: string;
-}
+import { TEMPLATE_EXPECTATIONS } from './expectations';
+import { getTestSubjectName } from '../../lib';
+import { TEMPLATE_DESTRUCTURE_BUILD_TEST_CONTEXT } from './destructure-build-test-context';
 
 export const TEMPLATE_IT_SHOULD_UNIT = 'TEMPLATE_IT_SHOULD_UNIT';
-TemplateService.register(TEMPLATE_IT_SHOULD_UNIT, itShouldUnitTemplate);
-
-function itShouldUnitTemplate({
-  parametersAndSubject,
-  testSubjectName,
-  expectations,
-}: Params): string {
+TemplateService.register(TEMPLATE_IT_SHOULD_UNIT, ({ test, include }) => {
   return `it('should', async () => {
-    const { ${parametersAndSubject} } = buildTestContext();
-    const result = await ${testSubjectName}();
+    ${include(TEMPLATE_DESTRUCTURE_BUILD_TEST_CONTEXT)}
+    const result = await ${getTestSubjectName(test)}();
 
-    ${expectations}
+    ${include(TEMPLATE_EXPECTATIONS)}
 });
 `;
-}
+});

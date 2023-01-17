@@ -10,7 +10,5 @@ export async function makeIntegrationTest(
   templateService: TemplateService,
   test: UnitTest,
 ): Promise<string> {
-  return templateService.use(TEMPLATE_INTEGRATION_TEST, {
-    integrationName: test.name,
-  });
+  return templateService.use(TEMPLATE_INTEGRATION_TEST, test);
 }

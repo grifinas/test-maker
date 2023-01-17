@@ -1,26 +1,23 @@
 import { TemplateService } from '../../services';
+import { TEMPLATE_EXPECTATIONS } from './expectations';
 
 interface Params {
-  expectations: string;
-  testName: string;
+  functionName: string;
 }
 
 export const TEMPLATE_LIBRARY_FUNCTION = 'TEMPLATE_LIBRARY_FUNCTION';
-TemplateService.register(
+TemplateService.register<Params>(
   TEMPLATE_LIBRARY_FUNCTION,
-  libraryFunctionTestTemplate,
-);
+  ({ include, extra }) => {
+    const { functionName } = extra || {};
 
-function libraryFunctionTestTemplate({
-  testName,
-  expectations,
-}: Params): string {
-  return `describe('${testName}', () => {
+    return `describe('${functionName}', () => {
   it('should', async () => {
-    const result = ${testName}();
+    const result = ${functionName}();
 
-    ${expectations}
+    ${include(TEMPLATE_EXPECTATIONS)}
   });
 });
 `;
-}
+  },
+);
