@@ -1,3 +1,4 @@
+/// <reference path='../modules.d.ts'/>
 import { format, resolveConfig } from 'prettier';
 import { saveFile } from './save-file';
 

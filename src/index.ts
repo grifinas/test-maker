@@ -1,4 +1,3 @@
-/// <reference path='modules.d.ts'/>
 export { getParser } from './parser';
 export { TestMaker, ConstructorInput } from './test-maker';
 export * from './actions';
