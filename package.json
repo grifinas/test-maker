@@ -1,8 +1,9 @@
 {
-  "name": "test-maker",
+  "name": "@grifinas/test-maker",
   "version": "1.0.0",
   "description": "Make tests",
-  "main": "src/index.ts",
+  "main": "dist/src/index.ts",
+  "types": "dist/src/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test:it": "mocha --require ts-node/register 'test/**/*.it.ts' --reporter mocha-env-reporter",
@@ -38,6 +39,24 @@
     "eslint-plugin-typescript-sort-keys": "^2.1.0",
     "eslint-plugin-unused-imports": "^2.0.0"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "grifinas",
+  "license": "MIT",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grifinas/test-maker.git"
+  },
+  "keywords": [
+    "typescript",
+    "test-maker",
+    "test-generator",
+    "test",
+    "generator"
+  ],
+  "bugs": {
+    "url": "https://github.com/grifinas/test-maker/issues"
+  },
+  "homepage": "https://github.com/grifinas/test-maker#readme"
 }

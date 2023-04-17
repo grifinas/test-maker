@@ -13,7 +13,7 @@ export async function transformClassToUnitTest(
     fileContext.imports,
   );
 
-  testBuilder.addParameters(parameters);
+  await testBuilder.addParameters(parameters);
   testBuilder.isClass = true;
   declaration.methods
     .filter(

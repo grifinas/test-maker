@@ -3,11 +3,11 @@ import { capitalize, getMissingImports } from '../lib';
 import { File, NamedImport } from 'typescript-parser';
 import { getImports, getImportsFromParameters } from '../actions';
 import { readFileSync } from 'fs';
-import { getParser } from '../parser';
 import { Actions, TemplateService, TestViewRegistry } from '../services';
 import { TestTypes } from '../interfaces';
 import { TEMPLATE_FUNCTION_TESTS } from '../templates/parts/function-tests';
 import { TEMPLATE_BUILD_TEST_CONTEXT } from '../templates';
+import { parseFile } from '../parser';
 
 interface UpdateContext {
   testContent: string;
@@ -22,7 +22,7 @@ export async function makeUnitTestUpdate(
   unit: UnitTest,
 ): Promise<string> {
   const testContent = readFileSync(unit.path).toString();
-  const testFile = await getParser().parseFile(unit.path, '');
+  const testFile = await parseFile(unit.path, '');
 
   const context: UpdateContext = {
     testContent,

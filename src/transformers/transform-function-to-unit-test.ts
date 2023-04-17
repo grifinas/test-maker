@@ -13,7 +13,7 @@ export async function transformFunctionToUnitTest(
   );
 
   testBuilder.name = declaration.name;
-  testBuilder.addParameters(parameters);
+  await testBuilder.addParameters(parameters);
   testBuilder.addFunction(declaration.name);
 
   return testBuilder;

@@ -1,4 +1,4 @@
-export { getParser } from './parser';
+export { parseFile } from './parser';
 export { TestMaker, ConstructorInput } from './test-maker';
 export * from './actions';
 export * from './entities';

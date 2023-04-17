@@ -1,14 +1,18 @@
 import { GroupedImports, getImportsFromParameters } from '../actions';
 import { Parameter } from './parameter';
 import { FileContext } from './file-context';
-import { FilePathService } from '../services';
+import { FilePathService, StubService } from '../services';
 import { UnitTest } from './unit-test';
-import { getStubFunctionName } from '../lib';
+import { Stub } from '../interfaces/stub';
+
+export interface BuilderParameter extends Parameter {
+  stub: Stub;
+}
 
 export class TestBuilder {
   private readonly imports = new Map<string, Set<string>>();
   private readonly functions: string[] = [];
-  private readonly parameters: Parameter[] = [];
+  private readonly parameters: BuilderParameter[] = [];
   private _isClass = false;
   private _isLibrary = false;
 
@@ -40,7 +44,7 @@ export class TestBuilder {
     );
   }
 
-  addParameters(parameters: Parameter[]): void {
+  async addParameters(parameters: Parameter[]): Promise<void> {
     this.addImports(
       getImportsFromParameters(
         parameters,
@@ -48,16 +52,17 @@ export class TestBuilder {
         this.fileContext.path,
       ),
     );
-    parameters.map((param) => this.addParameter(param));
+    await Promise.all(parameters.map((param) => this.addParameter(param)));
   }
 
   addFunction(fn: string): void {
     this.functions.push(fn);
   }
 
-  addParameter(parameter: Parameter): void {
-    this.parameters.push(parameter);
-    this.addImport('@stub/functions', [getStubFunctionName(parameter)]);
+  async addParameter(parameter: Parameter): Promise<void> {
+    const stub = await StubService.getStub(parameter);
+    this.parameters.push({ ...parameter, stub });
+    this.addImport(stub.path, [stub.specifier]);
   }
 
   set isClass(value: boolean) {

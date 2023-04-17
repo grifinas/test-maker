@@ -1,5 +1,5 @@
-import { Parameter } from './parameter';
 import { GroupedImports } from '../actions';
+import { BuilderParameter } from './test-builder';
 
 export interface UnitTest {
   functions: string[];
@@ -7,6 +7,6 @@ export interface UnitTest {
   isClass: boolean;
   isLibrary: boolean;
   name: string;
-  parameters: Parameter[];
+  parameters: BuilderParameter[];
   path: string;
 }

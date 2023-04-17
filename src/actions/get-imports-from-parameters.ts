@@ -1,6 +1,7 @@
-import { Parameter } from '../entities/parameter';
+import { Parameter } from '../entities';
 import { Imports } from './get-imports';
-import { FilePathService } from '../services/file-path-service';
+import { FilePathService } from '../services';
+import { isBuiltInType } from '../lib/is-built-in-type';
 
 export type GroupedImports = Map<string, string[]>;
 
@@ -29,7 +30,11 @@ export function getImportsFromParameters(
         .map((argument) => argument.trim());
 
       genericArguments.forEach((argument) => {
+        if (isBuiltInType(argument)) {
+          return;
+        }
         const argumentImport = allImports.get(argument);
+
         if (!argumentImport) {
           throw new Error(
             `Failed to find argument ${argument} of type ${parameter.typeWithArguments}`,

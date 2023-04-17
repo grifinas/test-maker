@@ -1,5 +1,6 @@
 import { File, NamedImport } from 'typescript-parser';
 import * as fs from 'fs';
+import { existsSync } from 'fs';
 
 export class FilePathService {
   static root = '';
@@ -61,20 +62,16 @@ export class FilePathService {
     return `${newPath}/${libraryParts.pop()}.ts`;
   }
 
-  static resolveAbsolutePath(path: string): string {
-    if (this.isNodeModule(path)) {
-      return `${FilePathService.getRoot()}/node_modules/@types/${path}/index.d.ts`;
-    }
-    if (path.startsWith('@')) {
-      //TODO Could also be an alias
-      return `${FilePathService.getRoot()}/node_modules/${path}/index.d.ts`;
-    }
-
-    return path;
+  /**
+   * Input: /User/foo/Projects/src/file.ts
+   * Output: /User/foo/Projects/src/
+   * */
+  static getPathWithoutFile(path: string): string {
+    return path.split('/').slice(0, -1).join('/');
   }
 
   static isNodeModule(path: string): boolean {
-    return Boolean(path.match(/^[a-z]/));
+    return existsSync(`${FilePathService.getRoot()}/node_modules/${path}`);
   }
 
   static isIntegrationTest(file: File): boolean {
@@ -103,13 +100,16 @@ export class FilePathService {
 
     return file.filePath.replace(
       regex,
-      `${this.root}/test/$1.${realTestExtension}.ts`,
+      `${
+        this.root
+      }/${this.getCurrentTestFolderName()}/$1.${realTestExtension}.ts`,
     );
   }
 
   static setRootFrom(file: string): void {
-    if (file.indexOf('/src/') > -1) {
-      this.root = file.replace(/\/src\/(.*)/, '');
+    const indexOfSrc = file.lastIndexOf('/src/');
+    if (indexOfSrc > -1) {
+      this.root = file.substring(0, indexOfSrc);
     } else {
       const parts = file.split('/');
       while (parts.length) {
@@ -125,5 +125,17 @@ export class FilePathService {
 
   static getRoot(): string {
     return this.root;
+  }
+
+  static getCurrentTestFolderName(): string {
+    const options = ['test', 'tst'];
+
+    for (const name of options) {
+      if (fs.existsSync(`${this.root}/${name}/`)) {
+        return name;
+      }
+    }
+
+    return 'test';
   }
 }

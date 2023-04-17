@@ -1,5 +1,7 @@
+import { Import } from '../actions';
+
 export interface Parameter {
-  isClass: boolean;
+  import?: Import;
   isGeneric: boolean;
   name: string;
   type?: string;

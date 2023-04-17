@@ -4,7 +4,6 @@ import {
   TestRegistry,
   TestViewRegistry,
 } from './services';
-import { getParser } from './parser';
 import {
   GetTestBuilder,
   GetTestName,
@@ -14,6 +13,7 @@ import {
 import { existsSync } from 'fs';
 import { getDefaultTestMakerParams, getFileContext } from './actions';
 import { makeBackupUnitTest } from './views/make-backup-unit-test';
+import { parseFile } from './parser';
 
 export interface ConstructorInput {
   getTestBuilder: GetTestBuilder;
@@ -43,7 +43,7 @@ export class TestMaker {
 
   public async makeTest(file: string, forcedTestType?: string): Promise<void> {
     FilePathService.setRootFrom(file);
-    const parsed = await getParser().parseFile(file, '');
+    const parsed = await parseFile(file, '');
     const type = forcedTestType ?? this.getTestType(parsed);
     const testName = this.getTestName(parsed, type);
 

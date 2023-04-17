@@ -1,3 +1,4 @@
+import './src/register-default';
 import { TestMaker } from './src';
 
 if (process.argv.length < 3) {
