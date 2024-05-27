@@ -19,8 +19,8 @@ describe('factoryWithDependencies', () => {
   it('should', async () => {
     const { fn1, fn2, factoryWithDependencies } = buildTestContext();
     const result = await factoryWithDependencies();
-    expect(result).to.be.eql();
-    expect(fn1).to.be.calledOnceWithExactly();
-    expect(fn2).to.be.calledOnceWithExactly();
+    expect(result).toEqual();
+    expect(fn1).toHaveBeenCalledWith();
+    expect(fn2).toHaveBeenCalledWith();
   });
 });

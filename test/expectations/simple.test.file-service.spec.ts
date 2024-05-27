@@ -17,8 +17,8 @@ describe('FileService', () => {
       const { dep, fileService } = buildTestContext();
       const result = await fileService.foo();
 
-      expect(result).to.be.eql();
-      expect(dep).to.be.calledOnceWithExactly();
+      expect(result).toEqual();
+      expect(dep).toHaveBeenCalledWith();
     });
   });
 });

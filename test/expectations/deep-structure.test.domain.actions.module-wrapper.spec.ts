@@ -20,9 +20,9 @@ describe('ModuleWrapper', () => {
       const { stub, alias, moduleWrapper } = buildTestContext();
       const result = await moduleWrapper.a();
 
-      expect(result).to.be.eql();
-      expect(stub).to.be.calledOnceWithExactly();
-      expect(alias).to.be.calledOnceWithExactly();
+      expect(result).toEqual();
+      expect(stub).toHaveBeenCalledWith();
+      expect(alias).toHaveBeenCalledWith();
     });
   });
 });

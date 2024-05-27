@@ -14,8 +14,8 @@ describe('Repository', () => {
     it('should', async () => {
       const { action, repository } = buildTestContext();
       const result = await repository.baz();
-      expect(result).to.be.eql();
-      expect(action).to.be.calledOnceWithExactly();
+      expect(result).toEqual();
+      expect(action).toHaveBeenCalledWith();
     });
   });
 });

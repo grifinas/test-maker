@@ -22,7 +22,7 @@ describe('fileWithExistingTestFactory', () => {
     const { file1, fileWithExistingTest } = buildTestContext();
     const result = fileWithExistingTest();
 
-    expect(result).to.be.eql();
-    expect(file1).to.be.calledOnceWithExactly();
+    expect(result).toEqual();
+    expect(file1).toHaveBeenCalledWith();
   });
 });

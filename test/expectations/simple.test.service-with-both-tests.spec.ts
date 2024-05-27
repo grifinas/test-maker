@@ -35,9 +35,9 @@ describe('ServiceWithBothTests', () => {
       const { action, random, serviceWithBothTests } = buildTestContext();
       const result = serviceWithBothTests.bar();
 
-      expect(result).to.be.eql();
-      expect(action).to.be.calledOnceWithExactly();
-      expect(random).to.be.calledOnceWithExactly();
+      expect(result).toEqual();
+      expect(action).toHaveBeenCalledWith();
+      expect(random).toHaveBeenCalledWith();
     });
   });
 
@@ -47,10 +47,10 @@ describe('ServiceWithBothTests', () => {
         buildTestContext();
       const result = await serviceWithBothTests.newFn();
 
-      expect(result).to.be.eql();
-      expect(fn1).to.be.calledOnceWithExactly();
-      expect(fn2).to.be.calledOnceWithExactly();
-      expect(fileService).to.be.calledOnceWithExactly();
+      expect(result).toEqual();
+      expect(fn1).toHaveBeenCalledWith();
+      expect(fn2).toHaveBeenCalledWith();
+      expect(fileService).toHaveBeenCalledWith();
     });
   });
 });

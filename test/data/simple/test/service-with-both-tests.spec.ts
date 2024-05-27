@@ -24,9 +24,9 @@ describe('ServiceWithBothTests', () => {
       const { action, random, serviceWithBothTests } = buildTestContext();
       const result = serviceWithBothTests.bar();
 
-      expect(result).to.be.eql();
-      expect(action).to.be.calledOnceWithExactly();
-      expect(random).to.be.calledOnceWithExactly();
+      expect(result).toEqual();
+      expect(action).toHaveBeenCalledWith();
+      expect(random).toHaveBeenCalledWith();
     });
   });
 });

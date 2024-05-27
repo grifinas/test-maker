@@ -10,6 +10,6 @@ describe('usefulActionFactory', () => {
   it('should', async () => {
     const { useful } = buildTestContext();
     const result = await useful();
-    expect(result).to.be.eql();
+    expect(result).toEqual();
   });
 });

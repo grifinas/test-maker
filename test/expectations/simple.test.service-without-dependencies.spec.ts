@@ -12,7 +12,7 @@ describe('ServiceWithoutDependencies', () => {
       const { serviceWithoutDependencies } = buildTestContext();
       const result = await serviceWithoutDependencies.bar();
 
-      expect(result).to.be.eql();
+      expect(result).toEqual();
     });
   });
 });
